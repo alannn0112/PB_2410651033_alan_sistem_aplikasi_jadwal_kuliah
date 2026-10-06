@@ -1,17 +1,31 @@
-# flutter_application_1
+# sistem aplikasi jadwal kuliah
 
-A new Flutter project.
+## Deskripsi
+Aplikasi ini membantu mahasiswa melihat dan mengatur jadwal dengan lebih mudah.
 
-## Getting Started
+## Identitas
+Nama: Muhammad Maulana Nur Sulaiman 
+NIM: 2410651033
 
-This project is a starting point for a Flutter application.
+## Versi
+v0.0 - Prototype
 
-A few resources to get you started if this is your first Flutter project:
+## Fitur Prototype v0.0
+- Menampilkan nama aplikasi
+- Menampilkan deskripsi aplikasi
+- Menampilkan identitas pengembang
+- Menampilkan target pengguna
+- Menampilkan tombol interaktif sederhana dengan SnackBar
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Cara Menjalankan
+flutter pub get
+flutter run -d chrome
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Bukti Running
+Screenshot aplikasi berjalan dilampirkan pada LMS.
+
+## Catatan Kendala
+Tuliskan kendala yang dialami jika ada.(gaada)
+
+## Catatan Penggunaan AI
+Digunakan untuk mencari ide aplikasi yang akan dikembangkan kedepannya
