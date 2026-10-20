@@ -94,3 +94,58 @@ AI digunakan sebagai alat bantu untuk brainstorming ide, menyusun struktur antar
 ## Lisensi
 
 Project ini dibuat untuk keperluan pembelajaran akademik.
+
+
+## Fitur Aplikasi
+
+- Menampilkan jadwal kuliah pada halaman utama.
+- Menambahkan jadwal kuliah baru.
+- Mengisi informasi mata kuliah, hari, jam, ruang, dan dosen.
+- Menampilkan seluruh jadwal kuliah pada halaman Semua Jadwal.
+- Menggunakan navigasi antarhalaman dengan Navigator.push dan Navigator.pop.
+- Memvalidasi kolom formulir agar tidak kosong.
+- Menampilkan pesan ketika jadwal berhasil ditambahkan.
+
+Halaman Aplikasi
+1. Home Page — halaman utama yang menampilkan sapaan dan jadwal kuliah hari ini.
+2. Form Jadwal — halaman untuk mengisi dan menyimpan jadwal kuliah.
+3. Semua Jadwal — halaman untuk melihat seluruh jadwal yang sudah ditambahkan.
+
+Teknologi yang Digunakan
+- Flutter
+- Bahasa pemrograman Dart
+- Material Design 3
+- Visual Studio Code
+- Git dan GitHub
+
+Cara Menjalankan Aplikasi
+1. Pastikan Flutter SDK dan Google Chrome sudah terpasang.
+2. Buka folder proyek JadwalKu melalui Visual Studio Code.
+3. Buka terminal pada folder proyek.
+4. Jalankan perintah berikut:
+    flutter pub get
+    flutter run -d chrome
+5. Tunggu sampai aplikasi terbuka di Google Chrome.
+
+Struktur Proyek
+
+lib/
+└── main.dart
+web/
+├── index.html
+├── manifest.json
+└── icons/
+README.md
+CHANGELOG.md
+
+## Pengujian
+
+Pengujian dilakukan dengan mencoba membuka halaman formulir, mengisi data jadwal, menyimpan jadwal, dan membuka halaman Semua Jadwal. Setiap tombol perlu diuji kembali untuk memastikan navigasi berjalan sesuai fungsinya.
+
+## Catatan
+
+Data jadwal pada versi ini masih disimpan sementara selama aplikasi berjalan. Data belum menggunakan database atau penyimpanan permanen, sehingga dapat hilang ketika aplikasi dimulai ulang.
+
+## Pengembangan
+
+Versi ini merupakan pengembangan aplikasi JadwalKu dari prototype awal menuju Navigation v0.1. Pengembangan selanjutnya dapat mencakup penyimpanan data permanen, pengeditan jadwal, dan penghapusan jadwal.

@@ -16,8 +16,8 @@ Bukti:
 - Commit Git tersedia.
 
 
-# Changelog
-
+# Changelog 
+13 Oktober 2026
 Semua perubahan penting pada project JadwalKu dicatat dalam dokumen ini.
 
 ## [0.0.0] - Prototype Awal
@@ -43,3 +43,28 @@ Semua perubahan penting pada project JadwalKu dicatat dalam dokumen ini.
 - Fitur CRUD belum sepenuhnya diimplementasikan.
 - Notifikasi jadwal masih berupa konsep desain.
 - Pengujian aksesibilitas menyeluruh belum dilakukan.
+
+# Changelog
+20 Oktober 2026
+[v0.1] - Navigation
+
+Added
+- Menambahkan navigasi dari halaman utama ke halaman Form Jadwal.
+- Menambahkan halaman Semua Jadwal.
+- Menambahkan formulir untuk memasukkan mata kuliah, hari, jam, ruang, dan dosen.
+- Menambahkan tombol Tambah Jadwal Kuliah dan Lihat Semua.
+- Menambahkan tombol Simpan Jadwal dan Batal.
+- Menambahkan validasi untuk kolom formulir.
+- Menambahkan navigasi kembali menggunakan Navigator.pop.
+- Menambahkan tampilan kartu jadwal dengan informasi perkuliahan.
+
+Improved
+- Menyesuaikan tampilan aplikasi menggunakan warna biru dan putih.
+- Merapikan tampilan halaman utama dan halaman daftar jadwal.
+- Menambahkan pemeriksaan agar halaman tidak memperbarui state setelah widget tidak aktif.
+
+Notes
+- Data jadwal masih disimpan dalam memori aplikasi.
+- Database dan penyimpanan permanen belum diterapkan.
+- Pengujian tombol dan navigasi perlu dilakukan sebelum versi ini dinyatakan selesai.
+
