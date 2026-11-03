@@ -8,6 +8,45 @@ void main() {
 const Color biru = Color(0xFF1976E8);
 const Color latar = Color(0xFFF2F6FF);
 
+// ==================== MODEL DATA ====================
+
+class Jadwal {
+  final int id;
+  final String matkul;
+  final String hari;
+  final String jam;
+  final String ruang;
+  final String dosen;
+
+  const Jadwal({
+    required this.id,
+    required this.matkul,
+    required this.hari,
+    required this.jam,
+    required this.ruang,
+    required this.dosen,
+  });
+
+  Jadwal copyWith({
+    String? matkul,
+    String? hari,
+    String? jam,
+    String? ruang,
+    String? dosen,
+  }) {
+    return Jadwal(
+      id: id,
+      matkul: matkul ?? this.matkul,
+      hari: hari ?? this.hari,
+      jam: jam ?? this.jam,
+      ruang: ruang ?? this.ruang,
+      dosen: dosen ?? this.dosen,
+    );
+  }
+}
+
+// ==================== APLIKASI ====================
+
 class JadwalKuApp extends StatelessWidget {
   const JadwalKuApp({super.key});
 
@@ -20,33 +59,13 @@ class JadwalKuApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: biru),
         scaffoldBackgroundColor: latar,
-        inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.white,
-        ),
       ),
       home: const HomePage(),
     );
   }
 }
 
-class Jadwal {
-  final String matkul;
-  final String hari;
-  final String jam;
-  final String ruang;
-  final String dosen;
-
-  const Jadwal({
-    required this.matkul,
-    required this.hari,
-    required this.jam,
-    required this.ruang,
-    required this.dosen,
-  });
-}
-
-//HALAMAN UTAMA
+// ==================== HALAMAN UTAMA ====================
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -58,21 +77,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<Jadwal> daftar = [
     const Jadwal(
+      id: 1,
       matkul: 'Pemrograman Bergerak',
-      hari: 'Selasa',
+      hari: 'Senin',
       jam: '07.50–11.09',
       ruang: 'CC 4.1B',
       dosen: 'Yeni Dwi Rahayu',
     ),
     const Jadwal(
+      id: 2,
       matkul: 'Statistika',
-      hari: 'Selasa',
+      hari: 'Senin',
       jam: '12.50–15.50',
       ruang: 'CC 2.2',
       dosen: 'Dewi Lusiana',
     ),
   ];
 
+  int nextId = 3;
+
+  // CREATE
   Future<void> tambahJadwal() async {
     final hasil = await Navigator.push<Jadwal>(
       context,
@@ -85,19 +109,72 @@ class _HomePageState extends State<HomePage> {
 
     if (hasil != null) {
       setState(() {
-        daftar.add(hasil);
+        daftar.add(
+          Jadwal(
+            id: nextId,
+            matkul: hasil.matkul,
+            hari: hasil.hari,
+            jam: hasil.jam,
+            ruang: hasil.ruang,
+            dosen: hasil.dosen,
+          ),
+        );
+        nextId++;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Jadwal berhasil ditambahkan!'),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.green,
-        ),
-      );
+      tampilPesan('Jadwal berhasil ditambahkan!');
     }
   }
 
+  // UPDATE
+  Future<void> editJadwal(Jadwal jadwal) async {
+    final hasil = await Navigator.push<Jadwal>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FormJadwal(jadwal: jadwal),
+      ),
+    );
+
+    if (!mounted) return;
+
+    if (hasil != null) {
+      setState(() {
+        final index = daftar.indexWhere(
+          (item) => item.id == jadwal.id,
+        );
+
+        if (index != -1) {
+          daftar[index] = hasil;
+        }
+      });
+
+      tampilPesan('Jadwal berhasil diperbarui!');
+    }
+  }
+
+  // DELETE
+  void hapusJadwal(Jadwal jadwal) {
+    setState(() {
+      daftar.removeWhere(
+        (item) => item.id == jadwal.id,
+      );
+    });
+
+    tampilPesan('Jadwal berhasil dihapus!');
+  }
+
+  // USER FEEDBACK
+  void tampilPesan(String pesan) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(pesan),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  // NAVIGASI SEMUA JADWAL
   Future<void> lihatSemua() async {
     await Navigator.push(
       context,
@@ -105,6 +182,8 @@ class _HomePageState extends State<HomePage> {
         builder: (context) => SemuaJadwalPage(
           daftar: daftar,
           onTambah: tambahJadwal,
+          onEdit: editJadwal,
+          onHapus: hapusJadwal,
         ),
       ),
     );
@@ -125,8 +204,9 @@ class _HomePageState extends State<HomePage> {
       'Minggu',
     ][DateTime.now().weekday - 1];
 
-    final jadwalHariIni =
-        daftar.where((j) => j.hari == hariIni).toList();
+    final jadwalHariIni = daftar
+        .where((jadwal) => jadwal.hari == hariIni)
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -138,7 +218,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: lihatSemua,
             icon: const Icon(Icons.calendar_month),
-            tooltip: 'Lihat semua jadwal',
+            tooltip: 'Semua Jadwal',
           ),
         ],
       ),
@@ -147,6 +227,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // HEADER
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(22),
@@ -173,13 +254,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 6),
                   Text(
-                    'Universitas Muhammadiyah Jember.',
+                    'Atur jadwal kuliahmu dengan mudah.',
                     style: TextStyle(color: Colors.white70),
                   ),
                 ],
               ),
             ),
+
             const SizedBox(height: 24),
+
+            // JADWAL HARI INI
             Row(
               children: [
                 const Expanded(
@@ -197,23 +281,34 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+
+            Text(
+              hariIni,
+              style: const TextStyle(color: Colors.black54),
+            ),
+
+            const SizedBox(height: 12),
+
             Expanded(
               child: jadwalHariIni.isEmpty
-                  ? const Center(
-                      child: Text(
-                        'Belum ada jadwal untuk hari ini.',
-                      ),
+                  ? const EmptyState(
+                      pesan: 'Belum ada jadwal kuliah hari ini.',
                     )
                   : ListView.builder(
                       itemCount: jadwalHariIni.length,
                       itemBuilder: (context, index) {
                         return KartuJadwal(
                           jadwal: jadwalHariIni[index],
+                          onEdit: () =>
+                              editJadwal(jadwalHariIni[index]),
+                          onDelete: () =>
+                              konfirmasiHapus(jadwalHariIni[index]),
                         );
                       },
                     ),
             ),
+
+            // TOMBOL TAMBAH
             SizedBox(
               width: double.infinity,
               height: 52,
@@ -232,27 +327,119 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  // DIALOG KONFIRMASI HAPUS
+  Future<void> konfirmasiHapus(Jadwal jadwal) async {
+    final konfirmasi = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Hapus Jadwal'),
+          content: Text(
+            'Apakah kamu yakin ingin menghapus '
+            '${jadwal.matkul}?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () =>
+                  Navigator.pop(dialogContext, false),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () =>
+                  Navigator.pop(dialogContext, true),
+              child: const Text(
+                'Hapus',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (konfirmasi == true && mounted) {
+      hapusJadwal(jadwal);
+    }
+  }
 }
 
-//SEMUA JADWAL
+// ==================== HALAMAN SEMUA JADWAL ====================
 
 class SemuaJadwalPage extends StatefulWidget {
   final List<Jadwal> daftar;
   final Future<void> Function() onTambah;
+  final Future<void> Function(Jadwal) onEdit;
+  final void Function(Jadwal) onHapus;
 
   const SemuaJadwalPage({
     super.key,
     required this.daftar,
     required this.onTambah,
+    required this.onEdit,
+    required this.onHapus,
   });
 
   @override
-  State<SemuaJadwalPage> createState() => _SemuaJadwalPageState();
+  State<SemuaJadwalPage> createState() =>
+      _SemuaJadwalPageState();
 }
 
 class _SemuaJadwalPageState extends State<SemuaJadwalPage> {
+  final List<String> urutanHari = [
+    'Senin',
+    'Selasa',
+    'Rabu',
+    'Kamis',
+    'Jumat',
+    'Sabtu',
+  ];
+
+  Future<void> konfirmasiHapus(Jadwal jadwal) async {
+    final konfirmasi = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Hapus Jadwal'),
+          content: Text(
+            'Yakin ingin menghapus ${jadwal.matkul}?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () =>
+                  Navigator.pop(dialogContext, false),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () =>
+                  Navigator.pop(dialogContext, true),
+              child: const Text(
+                'Hapus',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (konfirmasi == true && mounted) {
+      widget.onHapus(jadwal);
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final data = [...widget.daftar];
+
+    data.sort((a, b) {
+      final urutanA = urutanHari.indexOf(a.hari);
+      final urutanB = urutanHari.indexOf(b.hari);
+
+      return urutanA.compareTo(urutanB);
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Semua Jadwal'),
@@ -269,16 +456,26 @@ class _SemuaJadwalPageState extends State<SemuaJadwalPage> {
         icon: const Icon(Icons.add),
         label: const Text('Tambah'),
       ),
-      body: widget.daftar.isEmpty
-          ? const Center(
-              child: Text('Belum ada jadwal kuliah.'),
+      body: data.isEmpty
+          ? const EmptyState(
+              pesan: 'Belum ada jadwal kuliah.\n'
+                  'Silakan tambahkan jadwal baru.',
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: widget.daftar.length,
+              itemCount: data.length,
               itemBuilder: (context, index) {
+                final jadwal = data[index];
+
                 return KartuJadwal(
-                  jadwal: widget.daftar[index],
+                  jadwal: jadwal,
+                  onEdit: () async {
+                    await widget.onEdit(jadwal);
+
+                    if (!mounted) return;
+                    setState(() {});
+                  },
+                  onDelete: () => konfirmasiHapus(jadwal),
                 );
               },
             ),
@@ -286,53 +483,136 @@ class _SemuaJadwalPageState extends State<SemuaJadwalPage> {
   }
 }
 
-//KARTU JADWAL
+// ==================== KARTU JADWAL ====================
 
 class KartuJadwal extends StatelessWidget {
   final Jadwal jadwal;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   const KartuJadwal({
     super.key,
     required this.jadwal,
+    required this.onEdit,
+    required this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      margin: const EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        leading: const CircleAvatar(
-          backgroundColor: Color(0xFFE3F2FD),
-          child: Icon(
-            Icons.menu_book,
-            color: biru,
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: ListTile(
+          leading: const CircleAvatar(
+            backgroundColor: Color(0xFFE3F2FD),
+            child: Icon(
+              Icons.menu_book,
+              color: biru,
+            ),
+          ),
+          title: Text(
+            jadwal.matkul,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              '${jadwal.hari} • ${jadwal.jam}\n'
+              'Ruang: ${jadwal.ruang}\n'
+              'Dosen: ${jadwal.dosen}',
+            ),
+          ),
+          isThreeLine: true,
+          trailing: PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'edit') {
+                onEdit();
+              } else if (value == 'hapus') {
+                onDelete();
+              }
+            },
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: 'edit',
+                child: Row(
+                  children: [
+                    Icon(Icons.edit, size: 20),
+                    SizedBox(width: 8),
+                    Text('Edit'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'hapus',
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                      size: 20,
+                    ),
+                    SizedBox(width: 8),
+                    Text('Hapus'),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        title: Text(
-          jadwal.matkul,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Text(
-            '${jadwal.hari} • ${jadwal.jam}\n'
-            'Ruang: ${jadwal.ruang}\n'
-            'Dosen: ${jadwal.dosen}',
-          ),
-        ),
-        isThreeLine: true,
       ),
     );
   }
 }
 
-//FORM TAMBAH JADWAL
+// ==================== EMPTY STATE ====================
+
+class EmptyState extends StatelessWidget {
+  final String pesan;
+
+  const EmptyState({
+    super.key,
+    required this.pesan,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.event_busy,
+            size: 65,
+            color: Colors.black26,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            pesan,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.black54,
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ==================== FORM TAMBAH DAN EDIT ====================
 
 class FormJadwal extends StatefulWidget {
-  const FormJadwal({super.key});
+  final Jadwal? jadwal;
+
+  const FormJadwal({
+    super.key,
+    this.jadwal,
+  });
 
   @override
   State<FormJadwal> createState() => _FormJadwalState();
@@ -349,6 +629,21 @@ class _FormJadwalState extends State<FormJadwal> {
   String hari = 'Senin';
   bool sedangMenyimpan = false;
 
+  bool get modeEdit => widget.jadwal != null;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (modeEdit) {
+      matkul.text = widget.jadwal!.matkul;
+      hari = widget.jadwal!.hari;
+      jam.text = widget.jadwal!.jam;
+      ruang.text = widget.jadwal!.ruang;
+      dosen.text = widget.jadwal!.dosen;
+    }
+  }
+
   @override
   void dispose() {
     matkul.dispose();
@@ -358,7 +653,7 @@ class _FormJadwalState extends State<FormJadwal> {
     super.dispose();
   }
 
-  // Validasi wajib isi dan minimal 3 karakter.
+  // VALIDASI INPUT
   String? validasi(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Kolom ini wajib diisi';
@@ -371,6 +666,7 @@ class _FormJadwalState extends State<FormJadwal> {
     return null;
   }
 
+  // SIMPAN DATA
   Future<void> simpan() async {
     FocusScope.of(context).unfocus();
 
@@ -381,7 +677,6 @@ class _FormJadwalState extends State<FormJadwal> {
             'Periksa kembali input yang masih salah.',
           ),
           backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
         ),
       );
       return;
@@ -391,7 +686,6 @@ class _FormJadwalState extends State<FormJadwal> {
       sedangMenyimpan = true;
     });
 
-    // Simulasi proses penyimpanan.
     await Future.delayed(
       const Duration(milliseconds: 300),
     );
@@ -399,6 +693,7 @@ class _FormJadwalState extends State<FormJadwal> {
     if (!mounted) return;
 
     final jadwalBaru = Jadwal(
+      id: widget.jadwal?.id ?? 0,
       matkul: matkul.text.trim(),
       hari: hari,
       jam: jam.text.trim(),
@@ -417,28 +712,32 @@ class _FormJadwalState extends State<FormJadwal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah Jadwal Kuliah'),
+        title: Text(
+          modeEdit ? 'Edit Jadwal Kuliah' : 'Tambah Jadwal Kuliah',
+        ),
       ),
       body: Form(
         key: formKey,
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            const Text(
-              'Isi Informasi Perkuliahan',
-              style: TextStyle(
+            Text(
+              modeEdit
+                  ? 'Perbarui Informasi Perkuliahan'
+                  : 'Isi Informasi Perkuliahan',
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 6),
             const Text(
-              'Lengkapi data jadwal kuliah pada form berikut.',
+              'Lengkapi informasi jadwal kuliah berikut.',
               style: TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 20),
 
-            // Input mata kuliah.
+            // MATA KULIAH
             TextFormField(
               controller: matkul,
               textCapitalization: TextCapitalization.words,
@@ -452,7 +751,7 @@ class _FormJadwalState extends State<FormJadwal> {
             ),
             const SizedBox(height: 15),
 
-            // Pilihan hari.
+            // HARI
             DropdownButtonFormField<String>(
               initialValue: hari,
               decoration: const InputDecoration(
@@ -496,7 +795,7 @@ class _FormJadwalState extends State<FormJadwal> {
             ),
             const SizedBox(height: 15),
 
-            // Input jam kuliah.
+            // JAM KULIAH
             TextFormField(
               controller: jam,
               decoration: const InputDecoration(
@@ -509,13 +808,13 @@ class _FormJadwalState extends State<FormJadwal> {
             ),
             const SizedBox(height: 15),
 
-            // Input ruang.
+            // RUANG
             TextFormField(
               controller: ruang,
               textCapitalization: TextCapitalization.characters,
               decoration: const InputDecoration(
                 labelText: 'Ruang',
-                hintText: 'Contoh: CC 4.1A',
+                hintText: 'Contoh: CC 4.1B',
                 prefixIcon: Icon(Icons.meeting_room),
                 border: OutlineInputBorder(),
               ),
@@ -523,7 +822,7 @@ class _FormJadwalState extends State<FormJadwal> {
             ),
             const SizedBox(height: 15),
 
-            // Input dosen.
+            // DOSEN
             TextFormField(
               controller: dosen,
               textCapitalization: TextCapitalization.words,
@@ -537,7 +836,7 @@ class _FormJadwalState extends State<FormJadwal> {
             ),
             const SizedBox(height: 25),
 
-            // Tombol simpan dengan indikator proses.
+            // TOMBOL SIMPAN
             SizedBox(
               height: 52,
               child: FilledButton.icon(
@@ -555,7 +854,9 @@ class _FormJadwalState extends State<FormJadwal> {
                 label: Text(
                   sedangMenyimpan
                       ? 'Menyimpan...'
-                      : 'Simpan Jadwal',
+                      : modeEdit
+                          ? 'Perbarui Jadwal'
+                          : 'Simpan Jadwal',
                 ),
                 style: FilledButton.styleFrom(
                   backgroundColor: biru,
@@ -565,7 +866,6 @@ class _FormJadwalState extends State<FormJadwal> {
             ),
             const SizedBox(height: 10),
 
-            // Tombol batal.
             OutlinedButton(
               onPressed: sedangMenyimpan
                   ? null
@@ -578,3 +878,4 @@ class _FormJadwalState extends State<FormJadwal> {
     );
   }
 }
+
