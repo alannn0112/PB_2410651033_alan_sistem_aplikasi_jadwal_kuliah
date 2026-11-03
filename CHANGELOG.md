@@ -111,3 +111,51 @@ Notes
 - Menampilkan contoh jadwal kuliah.
 - Membuat komponen kartu untuk menampilkan informasi jadwal.
 - Menggunakan Material Design 3 dengan warna biru sebagai warna utama.
+
+
+# Changelog – JadwalKu
+3 November 2026
+## [v0.3] – BAB 7 Data Module
+
+### Added
+- Menambahkan fitur Create untuk memasukkan data jadwal kuliah.
+- Menambahkan fitur Read untuk menampilkan seluruh data jadwal.
+- Menambahkan fitur Update untuk mengubah data jadwal.
+- Menambahkan fitur Delete untuk menghapus data jadwal.
+- Menambahkan dialog konfirmasi sebelum menghapus data.
+- Menambahkan Empty State ketika daftar jadwal masih kosong.
+- Menambahkan notifikasi menggunakan SnackBar setelah proses pengelolaan data.
+
+### Improved
+- Menggabungkan form tambah dan edit jadwal agar dapat digunakan kembali.
+- Memperbarui tampilan daftar jadwal setelah data mengalami perubahan.
+- Mempertahankan validasi input dari versi sebelumnya.
+
+### Notes
+- Data masih disimpan sementara menggunakan list di dalam aplikasi.
+- Database permanen belum diterapkan pada versi ini.
+
+## [v0.2] – BAB 6 Form & Validation
+
+### Added
+- Menambahkan form input jadwal kuliah.
+- Menambahkan validasi pada setiap input.
+- Menambahkan pilihan hari menggunakan dropdown.
+- Menambahkan pesan informasi menggunakan SnackBar.
+
+### Improved
+- Memperbarui tampilan setelah data berhasil ditambahkan menggunakan setState().
+- Memastikan data diperiksa sebelum diproses.
+
+## [v0.1] – BAB 5 Navigation
+
+### Added
+- Membuat struktur awal aplikasi JadwalKu.
+- Menambahkan halaman utama.
+- Menambahkan navigasi antarhalaman.
+- Menampilkan contoh jadwal kuliah.
+
+
+Nama Aplikasi: JadwalKu  
+Platform: Flutter  
+Bahasa Pemrograman: Dart

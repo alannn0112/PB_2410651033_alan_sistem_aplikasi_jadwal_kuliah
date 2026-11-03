@@ -194,3 +194,72 @@ File main.dart berisi struktur utama aplikasi, model data jadwal, halaman utama,
 - Memasukkan teks kurang dari 3 karakter.
 - Mengisi seluruh data dengan benar dan menyimpan jadwal.
 - Memastikan notifikasi keberhasilan muncul setelah jadwal ditambahkan.
+
+
+
+
+## Informasi Aplikasi
+
+- Nama Aplikasi: JadwalKu
+- Platform: Flutter
+- Bahasa Pemrograman: Dart
+- Versi: v0.3
+- Mata Kuliah: Pemrograman Bergerak
+
+## Fitur Aplikasi
+
+### BAB 5 – Navigation v0.1
+- Navigasi antarhalaman aplikasi.
+- Halaman utama untuk menampilkan jadwal kuliah.
+- Halaman untuk melihat seluruh jadwal.
+
+### BAB 6 – Form & Validation v0.2
+- Form untuk menambahkan jadwal kuliah.
+- Input mata kuliah, hari, jam, ruang, dan dosen.
+- Validasi agar data wajib diisi.
+- Validasi minimal 3 karakter pada input teks.
+- Pesan informasi menggunakan SnackBar.
+- Pembaruan tampilan menggunakan setState().
+
+### BAB 7 – Data Module v0.3
+- Menambahkan data jadwal kuliah (Create).
+- Menampilkan daftar jadwal kuliah (Read).
+- Mengubah data jadwal yang sudah tersimpan (Update).
+- Menghapus data jadwal (Delete).
+- Menampilkan konfirmasi sebelum data dihapus.
+- Menampilkan Empty State ketika belum ada data jadwal.
+- Memberikan informasi kepada pengguna setelah proses tambah, ubah, atau hapus data.
+
+## Teknologi yang Digunakan
+
+- Flutter
+- Dart
+- Material Design 3
+- Visual Studio Code
+- Git dan GitHub
+
+## Cara Menjalankan Aplikasi
+
+1. Pastikan Flutter sudah terpasang di komputer.
+2. Clone repository ini.
+3. Buka folder project menggunakan Visual Studio Code.
+4. Jalankan perintah berikut pada terminal:
+    flutter pub get
+
+5. Jalankan aplikasi menggunakan perintah:
+    flutter run -d chrome
+
+## Struktur Project
+lib/
+└── main.dart
+
+README.md
+CHANGELOG.md
+
+## Penyimpanan Data
+
+Pada versi v0.3, data jadwal kuliah masih disimpan sementara menggunakan list di dalam aplikasi. Data dapat ditambahkan, ditampilkan, diubah, dan dihapus selama aplikasi berjalan. Penyimpanan permanen menggunakan database belum diterapkan.
+
+## Pengembangan Selanjutnya
+
+Pengembangan berikutnya dapat dilakukan dengan menambahkan penyimpanan data secara permanen menggunakan database lokal maupun online agar data jadwal tidak hilang ketika aplikasi ditutup.
