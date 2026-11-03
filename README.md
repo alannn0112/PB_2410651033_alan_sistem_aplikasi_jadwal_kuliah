@@ -149,3 +149,48 @@ Data jadwal pada versi ini masih disimpan sementara selama aplikasi berjalan. Da
 ## Pengembangan
 
 Versi ini merupakan pengembangan aplikasi JadwalKu dari prototype awal menuju Navigation v0.1. Pengembangan selanjutnya dapat mencakup penyimpanan data permanen, pengeditan jadwal, dan penghapusan jadwal.
+
+
+
+v0.2 - Form & Validation
+## Fitur Aplikasi
+- Jadwal Hari Ini: Menampilkan jadwal kuliah berdasarkan hari saat ini.
+- Semua Jadwal: Menampilkan seluruh jadwal yang tersedia.
+- Tambah Jadwal: Menambahkan informasi mata kuliah, hari, jam, ruang, dan dosen.
+- Form Validation: Memeriksa agar setiap kolom wajib diisi dan memiliki minimal 3 karakter.
+- Notifikasi: Menampilkan pesan ketika input tidak valid atau jadwal berhasil ditambahkan.
+- Indikator Penyimpanan: Menampilkan status proses saat jadwal sedang disimpan.
+- Navigasi Halaman: Berpindah dari halaman utama ke halaman semua jadwal dan form penambahan jadwal.
+
+## Teknologi yang Digunakan
+- Flutter
+- Bahasa pemrograman Dart
+- Material Design 3
+- Visual Studio Code
+- Google Chrome untuk pengujian Flutter Web
+
+## Tampilan dan Desain
+JadwalKu menggunakan desain sederhana dengan warna biru sebagai warna utama. Tampilan dibuat agar informasi jadwal mudah dibaca dan fitur utama mudah ditemukan oleh pengguna.
+
+## Struktur Proyek
+lib/
+└── main.dart
+
+File main.dart berisi struktur utama aplikasi, model data jadwal, halaman utama, halaman semua jadwal, komponen kartu jadwal, serta form tambah jadwal beserta validasinya.
+
+## Cara Menjalankan Aplikasi
+- Pastikan Flutter SDK dan Google Chrome sudah terpasang.
+- Buka folder proyek JadwalKu menggunakan Visual Studio Code.
+- Jalankan perintah berikut pada terminal untuk mengambil dependensi:
+     flutter pub get
+- Jalankan aplikasi menggunakan perintah:
+    flutter run -d chrome
+
+## Pengujian
+ Pengujian dilakukan dengan menjalankan aplikasi melalui Flutter Web di Google Chrome. Beberapa skenario pengujian yang dapat dilakukan adalah:
+- Membuka halaman utama dan melihat jadwal kuliah.
+- Membuka halaman semua jadwal.
+- Mencoba menyimpan form dalam keadaan kosong.
+- Memasukkan teks kurang dari 3 karakter.
+- Mengisi seluruh data dengan benar dan menyimpan jadwal.
+- Memastikan notifikasi keberhasilan muncul setelah jadwal ditambahkan.

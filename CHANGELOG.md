@@ -68,3 +68,46 @@ Notes
 - Database dan penyimpanan permanen belum diterapkan.
 - Pengujian tombol dan navigasi perlu dilakukan sebelum versi ini dinyatakan selesai.
 
+
+# Changelog
+28 Oktober 2026 
+## [0.2] - BAB 6: Form & Validation
+
+### Added
+- Menambahkan form untuk memasukkan data jadwal kuliah.
+- Menambahkan input mata kuliah, hari, jam kuliah, ruang, dan dosen.
+- Menambahkan validasi agar setiap kolom wajib diisi.
+- Menambahkan validasi minimal 3 karakter untuk setiap kolom teks.
+- Menambahkan notifikasi ketika input belum valid.
+- Menambahkan notifikasi ketika jadwal berhasil ditambahkan.
+- Menambahkan indikator proses saat penyimpanan berlangsung.
+- Menambahkan tombol batal pada form.
+- Mempertahankan navigasi ke halaman semua jadwal.
+
+### Improved
+- Memperjelas label dan petunjuk pengisian form.
+- Menambahkan ikon pada kolom input agar lebih mudah dikenali.
+- Menyesuaikan tampilan form dengan desain utama JadwalKu.
+
+### Notes
+- Data jadwal masih disimpan sementara di memori aplikasi.
+- Penyimpanan ke database belum diterapkan.
+
+## [0.1] - BAB 5: Navigation
+
+### Added
+- Menambahkan navigasi dari halaman utama ke halaman semua jadwal.
+- Menambahkan halaman untuk menampilkan daftar jadwal kuliah.
+- Menambahkan navigasi menuju form tambah jadwal.
+
+### Improved
+- Menata alur perpindahan halaman agar lebih mudah digunakan.
+
+## [0.0] - Initial Prototype
+
+### Added
+- Membuat struktur awal aplikasi JadwalKu menggunakan Flutter.
+- Membuat halaman utama aplikasi.
+- Menampilkan contoh jadwal kuliah.
+- Membuat komponen kartu untuk menampilkan informasi jadwal.
+- Menggunakan Material Design 3 dengan warna biru sebagai warna utama.
