@@ -8,7 +8,7 @@ void main() {
 const Color biru = Color(0xFF1976E8);
 const Color latar = Color(0xFFF2F6FF);
 
-// ==================== MODEL DATA ====================
+//MODEL DATA
 
 class Jadwal {
   final int id;
@@ -45,7 +45,7 @@ class Jadwal {
   }
 }
 
-// ==================== APLIKASI ====================
+//APLIKASI
 
 class JadwalKuApp extends StatelessWidget {
   const JadwalKuApp({super.key});
@@ -65,7 +65,7 @@ class JadwalKuApp extends StatelessWidget {
   }
 }
 
-// ==================== HALAMAN UTAMA ====================
+//HALAMAN UTAMA
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -92,9 +92,17 @@ class _HomePageState extends State<HomePage> {
       ruang: 'CC 2.2',
       dosen: 'Dewi Lusiana',
     ),
+    const Jadwal(
+      id: 2,
+      matkul: 'Pemrograman Web Lanjut',
+      hari: 'Rabu',
+      jam: '12.50–15.50',
+      ruang: 'CC 3.7',
+      dosen: 'Moh Dasuki',
+    ),
   ];
 
-  int nextId = 3;
+  int nextId = 4;
 
   // CREATE
   Future<void> tambahJadwal() async {
@@ -245,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    'Halo, Mahasiswa!',
+                    'Halo, ALAN!',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 23,
@@ -336,7 +344,7 @@ class _HomePageState extends State<HomePage> {
         return AlertDialog(
           title: const Text('Hapus Jadwal'),
           content: Text(
-            'Apakah kamu yakin ingin menghapus '
+            'Apakah kamu yakin ingin menghapus Mata Kuliah '
             '${jadwal.matkul}?',
           ),
           actions: [
@@ -364,7 +372,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// ==================== HALAMAN SEMUA JADWAL ====================
+//HALAMAN SEMUA JADWAL 
 
 class SemuaJadwalPage extends StatefulWidget {
   final List<Jadwal> daftar;
@@ -402,7 +410,7 @@ class _SemuaJadwalPageState extends State<SemuaJadwalPage> {
         return AlertDialog(
           title: const Text('Hapus Jadwal'),
           content: Text(
-            'Yakin ingin menghapus ${jadwal.matkul}?',
+            'Yakin ingin menghapus Mata Kuliah${jadwal.matkul}?',
           ),
           actions: [
             TextButton(
@@ -459,7 +467,7 @@ class _SemuaJadwalPageState extends State<SemuaJadwalPage> {
       body: data.isEmpty
           ? const EmptyState(
               pesan: 'Belum ada jadwal kuliah.\n'
-                  'Silakan tambahkan jadwal baru.',
+                  'Silakan tambahkan jadwal Mata Kuliah baru.',
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -483,7 +491,7 @@ class _SemuaJadwalPageState extends State<SemuaJadwalPage> {
   }
 }
 
-// ==================== KARTU JADWAL ====================
+//KARTU JADWAL
 
 class KartuJadwal extends StatelessWidget {
   final Jadwal jadwal;
@@ -568,7 +576,7 @@ class KartuJadwal extends StatelessWidget {
   }
 }
 
-// ==================== EMPTY STATE ====================
+//EMPTY STATE
 
 class EmptyState extends StatelessWidget {
   final String pesan;
@@ -604,7 +612,7 @@ class EmptyState extends StatelessWidget {
   }
 }
 
-// ==================== FORM TAMBAH DAN EDIT ====================
+//FORM TAMBAH DAN EDIT
 
 class FormJadwal extends StatefulWidget {
   final Jadwal? jadwal;
